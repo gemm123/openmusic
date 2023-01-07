@@ -33,6 +33,10 @@ const _exports = require('./api/exports');
 const ProducerService = require('./services/rabbitmq/ProducerService');
 const ExportsValidator = require('./validator/exports');
 
+const uploads = require('./api/uploads');
+const StorageService = require('./services/storage/StorageService');
+const UploadsValidator = require('./validator/uploads');
+
 const init = async () => {
     const albumsService = new AlbumsService();
     const songsService = new SongsService();
@@ -40,6 +44,7 @@ const init = async () => {
     const authenticationsService = new AuthenticationsService();
     const playlistsService = new PlaylistsService();
     const playlistSongsService = new PlaylistSongsService();
+    const storageService = new StorageService();
 
     const server = Hapi.server({
         port: process.env.PORT,
@@ -129,6 +134,13 @@ const init = async () => {
               service: ProducerService,
               playlistsService,
               validator: ExportsValidator,
+            },
+        },
+        {
+            plugin: uploads,
+            options: {
+              service: storageService,
+              validator: UploadsValidator,
             },
         },
     ]);
