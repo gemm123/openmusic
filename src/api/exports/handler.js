@@ -20,6 +20,7 @@ class ExportHandler {
 
             const message = {
                 userId: owner,
+                playlistId,
                 targetEmail,
             };
 
