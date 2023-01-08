@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
@@ -44,7 +45,7 @@ const init = async () => {
     const authenticationsService = new AuthenticationsService();
     const playlistsService = new PlaylistsService();
     const playlistSongsService = new PlaylistSongsService();
-    const storageService = new StorageService();
+    const storageService = new StorageService(path.resolve(__dirname, 'api/uploads/file/images'));
 
     const server = Hapi.server({
         port: process.env.PORT,
